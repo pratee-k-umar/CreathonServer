@@ -9,14 +9,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
-
 @csrf_exempt
-def register():
+def user_register(request):
   """
   Register a new user.
   Except a username, email and a password.
   """
-  
   if request.method != 'POST':
     return JsonResponse({'error': 'POST request required.'}, status=400)
   try:
@@ -39,7 +37,7 @@ def register():
     return JsonResponse({'error': 'Invalid JSON.'}, status=400)
   
 @csrf_exempt
-def login():
+def user_login(request):
   """
   Logs in a user.
   Expect an email and a password.
@@ -48,9 +46,9 @@ def login():
     return JsonResponse({'error': 'POST request required.'}, status=400)
   try:
     data = json.loads(request.body)
-    email = data.get('email')
+    username = data.get('username')
     password = data.get('password')
-    user = authenticate(request, email = email, password = password)
+    user = authenticate(request, username = username, password = password)
     if user is None:
       return JsonResponse({'error': 'Invalid credentials.'}, status=400)
     login(request, user)

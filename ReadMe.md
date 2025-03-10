@@ -90,7 +90,6 @@ The project uses PostgreSQL to manage core data, including:
 
    ```bash
    git clone https://github.com/pratee-k-umar/CreathonServer.git
-   cd core
    ```
 
 2. **Set up a virtual environment:**
@@ -102,37 +101,31 @@ The project uses PostgreSQL to manage core data, including:
    venv\Scripts\activate  # Windows
    ```
 
-3. **Migrate to core:**
-
-   ```bash
-   cd core
-   ```
-
-4. **Install dependencies:**
+3. **Install dependencies:**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-5. **Configure the Database:**
+4. **Configure the Database:**
 
    - Ensure PostgreSQL is installed and running.
    - Create a PostgreSQL database.
    - Update the `DATABASES` setting in your `settings.py` with your database credentials.
 
-6. **Apply Migrations:**
+5. **Apply Migrations:**
 
    ```bash
    python manage.py migrate
    ```
 
-7. **Create a Superuser (optional):**
+6. **Create a Superuser (optional):**
 
    ```bash
    python manage.py createsuperuser
    ```
 
-8. **Run the Development Server:**
+7. **Run the Development Server:**
 
    ```bash
    python manage.py runserver
