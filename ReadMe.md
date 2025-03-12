@@ -1,4 +1,4 @@
-# Interactive Learning Platform - Backend
+# Creathon - Backend
 
 An interactive learning platform where users can participate in coding and knowledge challenges, with seamless integration between a web interface and a Telegram bot. This backend is built with Django and is responsible for managing core business logic, handling authentication, exposing RESTful APIs, and managing user progress.
 
