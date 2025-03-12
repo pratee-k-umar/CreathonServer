@@ -1,5 +1,3 @@
-from urllib import request
-from django.shortcuts import render
 import json
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
@@ -46,9 +44,9 @@ def user_login(request):
     return JsonResponse({'error': 'POST request required.'}, status=400)
   try:
     data = json.loads(request.body)
-    username = data.get('username')
+    email = data.get('email')
     password = data.get('password')
-    user = authenticate(request, username = username, password = password)
+    user = authenticate(request, email = email, password = password)
     if user is None:
       return JsonResponse({'error': 'Invalid credentials.'}, status=400)
     login(request, user)
@@ -69,20 +67,7 @@ def user_logout(request):
   except:
     return JsonResponse({'error': 'Something went wrong.'}, status=500)
 
-@csrf_exempt
-def user_data(request):
-  """
-  Fetch authenticated user data
-  """
-  if not request.user.is_authenticated:
-    return JsonResponse({'error': 'User not authenticated.'}, status=401)
-  if request.method != 'GET':
-    return JsonResponse({'error': 'GET request required.'}, status=400)
-  return JsonResponse({
-    'username': request.user.username,
-    'email': request.user.email,
-  })
-  
+
 @csrf_exempt
 def change_pass(request):
   """
@@ -113,3 +98,25 @@ def change_pass(request):
   except json.JSONDecodeError:
     return JsonResponse({'error': 'Invalid JSON.'}, status=400)
   
+@csrf_exempt
+def profile(request, username):
+  if not request.user.is_authenticated:
+    try:
+      user = User.objects.get(username=username)
+      return JsonResponse({
+        'username': user.username,
+        'email': user.email,
+      })
+    except User.DoesNotExist:
+      return JsonResponse({'error': 'User not found.'}, status=404)
+  if request.method != 'GET':
+    return JsonResponse({'error': 'GET request required.'}, status=400)
+  try:
+    user = User.objects.get(username=username)
+    return JsonResponse({
+      'username': user.username,
+      'email': user.email,
+      'last_login': user.last_login
+    })
+  except User.DoesNotExist:
+    return JsonResponse({'error': 'User not found.'}, status=404)
