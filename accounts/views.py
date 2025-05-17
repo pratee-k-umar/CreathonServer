@@ -54,6 +54,7 @@ def user_login(request):
   except json.JSONDecodeError:
     return JsonResponse({'error': 'Invalid JSON.'}, status=400)
   
+
 @csrf_exempt
 def user_logout(request):
   """
@@ -66,7 +67,7 @@ def user_logout(request):
     return JsonResponse({'message': 'User logged out successfully.'}, status=200)
   except:
     return JsonResponse({'error': 'Something went wrong.'}, status=500)
-
+  
 
 @csrf_exempt
 def change_pass(request):

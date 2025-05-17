@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from core.challenges.models import Challenge
+from challenges.models import Challenge
 
 # Create your models here.
 
